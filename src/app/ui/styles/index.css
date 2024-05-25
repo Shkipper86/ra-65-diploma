@@ -247,7 +247,7 @@ section {
     border-radius: 8px;
     background-color: #FFFFFF;
     background-repeat: no-repeat;
-    background-image: url(../img/footer-sprite.png);
+    background-image: url(../../../shared/assets//img/footer-sprite.png);
 }
 
 .footer-pay-systems:not(:first-child) {
