@@ -1,3 +1,4 @@
+import { Catalog } from "../features/catalog/ui/catalog";
 import { TopSales } from "../features/top-sales/ui/top-sales";
 import { Banner } from "../shared/ui/layout/banner";
 
@@ -13,12 +14,7 @@ export const MainPage = () => {
           </section>
           <section className="catalog">
             <h2 className="text-center">Каталог</h2>
-            <div className="preloader">
-              <span></span>
-              <span></span>
-              <span></span>
-              <span></span>
-            </div>
+            <Catalog />
           </section>
         </div>
       </div>

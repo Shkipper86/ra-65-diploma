@@ -1,6 +1,6 @@
 import { Route, Routes } from "react-router-dom";
 import { MainPage } from "../../pages/main-page";
-import { Catalog } from "../../pages/catalog-page";
+import { CatalogPage } from "../../pages/catalog-page";
 import { About } from "../../pages/about-page";
 import { Product } from "../../pages/product-page";
 import { Cart } from "../../pages/cart-page";
@@ -15,7 +15,7 @@ function App() {
         {/* Главная страница */}
         <Route index element={<MainPage />} />
         {/* Каталог */}
-        <Route path="catalog" element={<Catalog />} />
+        <Route path="catalog" element={<CatalogPage />} />
         {/* О магазине */}
         <Route path="about" element={<About />} />
         {/* Сраница товара */}

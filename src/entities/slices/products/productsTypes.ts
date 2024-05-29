@@ -22,11 +22,25 @@ export interface IProductCardTypes extends IProductsBaseTypes {
   }[];
 }
 
-// export type ProductsTypes = IProductsBaseTypes | IProductCardTypes;
+export interface IProductCategories {
+  id: number;
+  title: string;
+}
+
+export interface IQueryParams {
+  category: number;
+  offset: number;
+  searchString?: string;
+}
 
 // Типы для стейта товаров
-export type InitialState = {
+export type InitialStateTypes = {
   fetchStatus: boolean;
   product?: IProductCardTypes;
+  topProductList?: IProductsBaseTypes[];
   productList?: IProductsBaseTypes[];
+  category: number;
+  categories?: IProductCategories[];
+  offset: number;
+  offsetMorestatus?: boolean;
 };

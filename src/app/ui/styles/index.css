@@ -9,6 +9,7 @@ a {
     color: #727e86;
 }
 
+
 a, a:hover, a:visited, a:active {
     text-decoration: none;
 }
@@ -192,6 +193,21 @@ section {
 .catalog-categories {
     font-size: 1.3rem;
     margin-bottom: 2em;
+}
+
+.category-item {
+    display: block;
+    padding: .5rem 1rem;
+    color: #727e86;
+    cursor: pointer;
+}
+
+.category-item:hover {
+    color: #0056b3;
+}
+
+.category-item.active {
+    color: #ff0000;
 }
 
 .catalog-item-card {

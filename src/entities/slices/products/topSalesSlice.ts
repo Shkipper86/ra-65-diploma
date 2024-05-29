@@ -1,9 +1,11 @@
 import { asyncThunkCreator, buildCreateSlice } from "@reduxjs/toolkit";
-import { InitialState } from "./productsTypes";
+import { InitialStateTypes } from "./productsTypes";
 
-const initialState: InitialState = {
+const initialState: InitialStateTypes = {
   fetchStatus: false,
-  productList: [],
+  topProductList: [],
+  category: 11,
+  offset: 0,
 };
 
 const sliceWithThunk = buildCreateSlice({
@@ -33,7 +35,7 @@ const topSalesSlice = sliceWithThunk({
           state.fetchStatus = true;
         },
         fulfilled: (state, action) => {
-          state.productList = action.payload;
+          state.topProductList = action.payload;
         },
         rejected: () => {
           console.log("loading error!");

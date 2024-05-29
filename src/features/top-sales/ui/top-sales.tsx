@@ -7,10 +7,11 @@ import { getTopSalesList } from "../../../entities/slices/products/topSalesSlice
 import { IProductsBaseTypes } from "../../../entities/slices/products/productsTypes";
 import { Link } from "react-router-dom";
 import { Preloader } from "../../../shared/ui/layout/preloader";
+import { CatalogItem } from "../../../shared/ui/layout/catalogItem";
 
 export const TopSales = () => {
   const topProductState: IProductsBaseTypes[] | undefined = useAppSelector(
-    (state) => state.topSales.productList
+    (state) => state.topSales.topProductList
   );
   const topProductsFetchStatus: boolean = useAppSelector(
     (state) => state.topSales.fetchStatus
@@ -19,27 +20,11 @@ export const TopSales = () => {
 
   const productList = topProductState?.map((product) => {
     return (
-      <>
-        <div className="col-4" key={product.id}>
-          <div className="card">
-            <img
-              src={product.images[0]}
-              className="card-img-top img-fluid"
-              alt={product.title}
-            />
-            <div className="card-body">
-              <p className="card-text">{product.title}</p>
-              <p className="card-text">{product.price} руб.</p>
-              <Link
-                to={`/product/${product.id}`}
-                className="btn btn-outline-primary"
-              >
-                Заказать
-              </Link>
-            </div>
-          </div>
+      <div className="col-4" key={product.id}>
+        <div className="card">
+          <CatalogItem product={product} />
         </div>
-      </>
+      </div>
     );
   });
 

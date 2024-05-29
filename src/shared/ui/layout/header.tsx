@@ -1,6 +1,6 @@
 // Компонент header
 
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import HeaderLogo from "../../assets/img/header-logo.png";
 import {
   useAppDispatch,
@@ -14,6 +14,18 @@ import {
 export const Header = () => {
   const headerState = useAppSelector((state) => state.header);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
+  const onClickHandler = () => {
+    headerState.search.searchStatusInHeader === false
+      ? dispatch(changeSearchStatusInHeader())
+      : headerState.search.searchStatusInHeader === true &&
+        headerState.search.searchString !== ""
+      ? (() => {
+          navigate("/catalog"), dispatch(changeSearchStatusInHeader());
+        })()
+      : dispatch(changeSearchStatusInHeader());
+  };
 
   return (
     <header className="container">
@@ -71,7 +83,7 @@ export const Header = () => {
                   <div
                     data-id="search-expander"
                     className="header-controls-pic header-controls-search"
-                    onClick={() => dispatch(changeSearchStatusInHeader())}
+                    onClick={onClickHandler}
                   ></div>
                   <Link to={"cart"}>
                     <div className="header-controls-pic header-controls-cart">
