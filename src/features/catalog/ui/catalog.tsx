@@ -14,7 +14,6 @@ import {
 } from "../../../entities/slices/products/productsTypes";
 import { CatalogItem } from "../../../shared/ui/layout/catalogItem";
 import { Preloader } from "../../../shared/ui/layout/preloader";
-import { changeSearchStatusInHeader } from "../../../entities/slices/header/headerSlice";
 
 export const Catalog = () => {
   const dispatch = useAppDispatch();
