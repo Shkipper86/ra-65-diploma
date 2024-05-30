@@ -16,6 +16,7 @@ export interface IProductCardTypes extends IProductsBaseTypes {
   season: string;
   heelSize: string;
   oldPrice: number;
+  sku: string;
   sizes: {
     size: string;
     available: boolean;

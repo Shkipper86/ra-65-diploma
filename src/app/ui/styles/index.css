@@ -217,6 +217,7 @@ section {
 .catalog-item-size {
     display: inline-block;
     padding: 0 10px;
+    margin-left: 8px;
 }
 
 .catalog-item-size.selected {
