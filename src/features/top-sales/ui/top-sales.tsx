@@ -5,7 +5,6 @@ import {
 } from "../../../entities/hooks/storeHooks";
 import { getTopSalesList } from "../../../entities/slices/products/topSalesSlice";
 import { IProductsBaseTypes } from "../../../entities/slices/products/productsTypes";
-import { Link } from "react-router-dom";
 import { Preloader } from "../../../shared/ui/layout/preloader";
 import { CatalogItem } from "../../../shared/ui/layout/catalogItem";
 

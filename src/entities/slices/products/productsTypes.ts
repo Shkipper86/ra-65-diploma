@@ -45,3 +45,17 @@ export type InitialStateTypes = {
   offset: number;
   offsetMorestatus?: boolean;
 };
+
+export type CartItemTypes = {
+  id: number;
+  title: string;
+  size: string;
+  quantity: number;
+  price: number;
+  totalPrice: number;
+};
+
+export type CartTypes = {
+  cartKeys: string[];
+  cart?: CartItemTypes[];
+};

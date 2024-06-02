@@ -13,6 +13,7 @@ import {
 
 export const Header = () => {
   const headerState = useAppSelector((state) => state.header);
+  const cartTotal = useAppSelector((state) => state.cart.cartKeys);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -87,7 +88,11 @@ export const Header = () => {
                   ></div>
                   <Link to={"cart"}>
                     <div className="header-controls-pic header-controls-cart">
-                      <div className="header-controls-cart-full">1</div>
+                      {cartTotal.length > 0 && (
+                        <div className="header-controls-cart-full">
+                          {cartTotal.length}
+                        </div>
+                      )}
                       <div className="header-controls-cart-menu"></div>
                     </div>
                   </Link>

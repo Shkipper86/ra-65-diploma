@@ -1,11 +1,14 @@
 import { useEffect, useState } from "react";
+import { useAppDispatch } from "../entities/hooks/storeHooks";
 import { Banner } from "../shared/ui/layout/banner";
 import ApiShared from "../shared/api/shared";
 import { useLocation } from "react-router-dom";
 import { IProductCardTypes } from "../entities/slices/products/productsTypes";
+import { getCartKeys } from "../entities/slices/products/cartSlice";
 
 export const Product = () => {
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const [productProperties, setProductProperties] =
     useState<IProductCardTypes>();
   const [quantity, setQuantity] = useState<number>(1);
@@ -24,6 +27,19 @@ export const Product = () => {
       `http://localhost:7070/api/items/${location.pathname.split("/").pop()}`
     ).then((response) => setProductProperties(response));
   }, []);
+
+  const addInCart = () => {
+    localStorage.setItem(
+      `${productProperties?.id}`,
+      `${JSON.stringify({
+        title: productProperties?.title,
+        size: selectedSize,
+        price: productProperties?.price,
+        quantity: quantity,
+      })}`
+    );
+    dispatch(getCartKeys());
+  };
 
   return (
     <main className="container">
@@ -116,16 +132,7 @@ export const Product = () => {
                 <button
                   className="btn btn-danger btn-block btn-lg"
                   disabled={selectedSize === ""}
-                  onClick={() =>
-                    localStorage.setItem(
-                      `${productProperties?.id}`,
-                      `${JSON.stringify({
-                        size: selectedSize,
-                        price: productProperties?.price,
-                        quantity: quantity,
-                      })}`
-                    )
-                  }
+                  onClick={addInCart}
                 >
                   В корзину
                 </button>
