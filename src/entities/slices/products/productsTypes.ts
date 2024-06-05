@@ -37,6 +37,7 @@ export interface IQueryParams {
 // Типы для стейта товаров
 export type InitialStateTypes = {
   fetchStatus: boolean;
+  prodictPropertiesFetchStatus: boolean;
   product?: IProductCardTypes;
   topProductList?: IProductsBaseTypes[];
   productList?: IProductsBaseTypes[];

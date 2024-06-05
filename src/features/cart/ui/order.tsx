@@ -4,7 +4,6 @@ import {
   useAppSelector,
 } from "../../../entities/hooks/storeHooks";
 import { postOrder } from "../../../entities/slices/products/cartSlice";
-import ApiShared from "../../../shared/api/shared";
 
 export const Order = () => {
   const [agreement, setAgreement] = useState(false);
@@ -29,9 +28,7 @@ export const Order = () => {
         };
       }),
     });
-    await ApiShared.post("http://localhost:7070/api/order", body).then(() =>
-      dispatch(postOrder())
-    );
+    dispatch(postOrder(body))
     adressRef.current!.value = "";
     telRef.current!.value = "";
     setAgreement(false);

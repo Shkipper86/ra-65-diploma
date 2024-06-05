@@ -3,6 +3,7 @@ import { IQueryParams, InitialStateTypes } from "./productsTypes";
 
 const initialState: InitialStateTypes = {
   fetchStatus: false,
+  prodictPropertiesFetchStatus: false,
   category: 11,
   offset: 0,
   offsetMorestatus: true,
@@ -164,9 +165,40 @@ const catalogSlice = sliceWithThunk({
         },
       }
     ),
+    getItemProperties: create.asyncThunk(
+      async (itemId: string, { rejectWithValue }) => {
+        try {
+          const response = await fetch(
+            `http://localhost:7070/api/items/${itemId}`
+          );
+
+          if (!response.ok) {
+            return rejectWithValue("Loading error!");
+          }
+
+          return await response.json();
+        } catch (e) {
+          return rejectWithValue(e);
+        }
+      },
+      {
+        pending: (state) => {
+          state.fetchStatus = true;
+        },
+        fulfilled: (state, action) => {
+          state.product = action.payload
+        },
+        rejected: () => {
+          console.log("loading error!");
+        },
+        settled: (state) => {
+          state.fetchStatus = false;
+        },
+      }
+    ),
   }),
 });
 
-export const { getCategories, getCatalog, loadNextItems, searchProducts } =
+export const { getCategories, getCatalog, loadNextItems, searchProducts, getItemProperties } =
   catalogSlice.actions;
 export default catalogSlice.reducer;

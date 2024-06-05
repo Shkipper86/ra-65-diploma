@@ -4,7 +4,6 @@ import {
   buildCreateSlice,
 } from "@reduxjs/toolkit";
 import { CartItemTypes, CartTypes, IQueryParams } from "./productsTypes";
-import ApiShared from "../../../shared/api/shared";
 
 const initialState: CartTypes = {
   cartKeys: [],
@@ -41,12 +40,38 @@ const cartSlice = sliceWithThunk({
         (key) => key != `${action.payload}`
       );
     }),
+    postOrder: create.asyncThunk(
+      async (body: string, { rejectWithValue }) => {
+        const queryOptions = {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: body,
+        };
+        try {
+          const response = await fetch(
+            `http://localhost:7070/api/order`, queryOptions
+          );
 
-    postOrder: create.reducer((state) => {
-      state.cartKeys = [];
-      state.cart = [];
-      localStorage.clear();
-    }),
+          if (!response.ok) {
+            return rejectWithValue("Order error!");
+          }
+
+          return console.log('ok!');
+        } catch (e) {
+          return rejectWithValue(e);
+        }
+      },
+      {
+        fulfilled: (state) => {
+          state.cartKeys = [];
+          state.cart = [];
+          localStorage.clear();
+        },
+        rejected: () => {
+          console.log("Order error!");
+        }
+      }
+    ),
   }),
 });
 
