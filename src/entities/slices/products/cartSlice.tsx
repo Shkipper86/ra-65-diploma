@@ -49,7 +49,7 @@ const cartSlice = sliceWithThunk({
         };
         try {
           const response = await fetch(
-            `http://localhost:7070/api/order`, queryOptions
+            `${import.meta.env.VITE_API_URL}/order`, queryOptions
           );
 
           if (!response.ok) {

@@ -14,6 +14,7 @@ export const Cart = () => {
 
   useEffect(() => {
     dispatch(getCartItems());
+
   }, []);
 
   const tBody = CartItems?.map((cart, index) => {

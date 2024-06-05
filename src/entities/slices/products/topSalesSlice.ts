@@ -3,6 +3,7 @@ import { InitialStateTypes } from "./productsTypes";
 
 const initialState: InitialStateTypes = {
   fetchStatus: false,
+  prodictPropertiesFetchStatus: false,
   topProductList: [],
   category: 11,
   offset: 0,
@@ -19,7 +20,7 @@ const topSalesSlice = sliceWithThunk({
     getTopSalesList: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         try {
-          const response = await fetch(`http://localhost:7070/api/top-sales`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/top-sales`);
 
           if (!response.ok) {
             return rejectWithValue("Loading error!");

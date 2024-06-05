@@ -33,7 +33,7 @@ const catalogSlice = sliceWithThunk({
     getCategories: create.asyncThunk(
       async (_, { rejectWithValue }) => {
         try {
-          const response = await fetch(`http://localhost:7070/api/categories`);
+          const response = await fetch(`${import.meta.env.VITE_API_URL}/categories`);
 
           if (!response.ok) {
             return rejectWithValue("Loading error!");
@@ -63,7 +63,7 @@ const catalogSlice = sliceWithThunk({
         const params = getParams(queryParam);
         try {
           const response = await fetch(
-            `http://localhost:7070/api/items?${params}`
+            `${import.meta.env.VITE_API_URL}/items?${params}`
           );
 
           if (!response.ok) {
@@ -100,7 +100,7 @@ const catalogSlice = sliceWithThunk({
         const params = getParams(queryParam);
         try {
           const response = await fetch(
-            `http://localhost:7070/api/items?${params}`
+            `${import.meta.env.VITE_API_URL}/items?${params}`
           );
 
           if (!response.ok) {
@@ -136,7 +136,7 @@ const catalogSlice = sliceWithThunk({
         const params = getParams(queryParam);
         try {
           const response = await fetch(
-            `http://localhost:7070/api/items?${params}`
+            `${import.meta.env.VITE_API_URL}/items?${params}`
           );
 
           if (!response.ok) {
@@ -169,7 +169,7 @@ const catalogSlice = sliceWithThunk({
       async (itemId: string, { rejectWithValue }) => {
         try {
           const response = await fetch(
-            `http://localhost:7070/api/items/${itemId}`
+            `${import.meta.env.VITE_API_URL}/items/${itemId}`
           );
 
           if (!response.ok) {
