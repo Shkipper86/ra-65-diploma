@@ -63,19 +63,24 @@ export const Catalog = () => {
   return (
     <>
       <Categories />
-      <div className="row">{catalogList}</div>
-      {catalogFetchStatus && <Preloader />}
-      <div className="text-center">
-        {offasetMoreStatus && (
-          <button
-            className="btn btn-outline-primary"
-            onClick={loadNext}
-            disabled={catalogFetchStatus}
-          >
-            Загрузить ещё
-          </button>
-        )}
-      </div>
+      {catalogFetchStatus ? <Preloader />
+        :
+        <>
+          {catalog === undefined || catalog.length === 0 && <h2 className="text-center nullMsg">Товары не найдены!</h2>}
+          <div className="row">{catalogList}</div>
+          <div className="text-center">
+            {offasetMoreStatus && (
+              <button
+                className="btn btn-outline-primary"
+                onClick={loadNext}
+                disabled={catalogFetchStatus}
+              >
+                Загрузить ещё
+              </button>
+            )}
+          </div>
+        </>
+      }
     </>
   );
 };

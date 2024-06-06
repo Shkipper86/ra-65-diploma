@@ -3,7 +3,7 @@ import {
   asyncThunkCreator,
   buildCreateSlice,
 } from "@reduxjs/toolkit";
-import { CartItemTypes, CartTypes, IQueryParams } from "./productsTypes";
+import { CartItemTypes, CartTypes } from "./productsTypes";
 
 const initialState: CartTypes = {
   cartKeys: [],

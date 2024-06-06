@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../entities/hooks/storeHooks";
 import { Banner } from "../shared/ui/layout/banner";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { IProductCardTypes } from "../entities/slices/products/productsTypes";
 import { getCartKeys } from "../entities/slices/products/cartSlice";
 import { getItemProperties } from "../entities/slices/products/catalogSlice";
@@ -10,6 +10,7 @@ import { Preloader } from "../shared/ui/layout/preloader";
 export const Product = () => {
   const location = useLocation();
   const dispatch = useAppDispatch();
+  const navigate = useNavigate()
   const productProperties: IProductCardTypes | undefined = useAppSelector(state => state.catalog.product)
   const prodictPropertiesFetchStatus: boolean = useAppSelector(state => state.catalog.prodictPropertiesFetchStatus)
   const [quantity, setQuantity] = useState<number>(1);
@@ -38,6 +39,7 @@ export const Product = () => {
       })}`
     );
     dispatch(getCartKeys());
+    navigate('/cart')
   };
 
   return (

@@ -352,3 +352,44 @@ h2, .h2 {
     background-color: #727e86;
     border-color: #727e86;
 }
+
+.card-img-top {
+    max-height: 331px;
+    align-self: center;
+    width: max-content;
+    height: inherit;
+    object-fit: contain;
+}
+
+.card {
+    height: 95%;
+}
+
+.top-sales .card {
+    height: 100%;
+}
+
+.card-body {
+    display: flex;
+    flex-direction: column;
+    justify-content: end;
+    max-height: 200px;
+}
+
+.card-text {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.nullMsg {
+    color: #727e86;
+}
+
+.order .card-body {
+    max-height: none;
+}
+
+.error {
+    border-color: #ff0000;
+}
