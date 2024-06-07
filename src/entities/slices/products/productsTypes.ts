@@ -35,7 +35,9 @@ export interface IQueryParams {
 }
 
 // Типы для стейта товаров
-export type InitialStateTypes = {
+export type InitialStateTypes = {  
+  fetchTopError?: boolean;
+  fetchCatalogError?: boolean;
   fetchStatus: boolean;
   prodictPropertiesFetchStatus: boolean;
   product?: IProductCardTypes;
@@ -57,6 +59,9 @@ export type CartItemTypes = {
 };
 
 export type CartTypes = {
+  fetchCartError?: boolean;
+  fetchStatus: boolean;
   cartKeys: string[];
   cart?: CartItemTypes[];
+  orderSendStatus?: boolean;
 };

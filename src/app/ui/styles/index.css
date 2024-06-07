@@ -393,3 +393,23 @@ h2, .h2 {
 .error {
     border-color: #ff0000;
 }
+
+.fetch-error {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    color: #ff0000;
+}
+
+.fetch-error .h2 {
+    margin-bottom: 0;
+}
+
+.successful {
+    display: flex;
+    flex-direction: column;
+    justify-self: center;
+    align-items: center;
+    color: #008000;
+}

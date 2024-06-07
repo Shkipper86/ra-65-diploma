@@ -6,6 +6,7 @@ import {
 import { CartItemTypes, CartTypes } from "./productsTypes";
 
 const initialState: CartTypes = {
+  fetchStatus: false,
   cartKeys: [],
 };
 
@@ -62,13 +63,22 @@ const cartSlice = sliceWithThunk({
         }
       },
       {
+        pending: (state) => {
+          state.fetchStatus = true
+          state.orderSendStatus = false
+          state.fetchCartError = false
+        },
         fulfilled: (state) => {
           state.cartKeys = [];
           state.cart = [];
           localStorage.clear();
+          state.orderSendStatus = true
         },
-        rejected: () => {
-          console.log("Order error!");
+        rejected: (state) => {
+          state.fetchCartError = true
+        },
+        settled: (state) => {
+          state.fetchStatus = false
         }
       }
     ),

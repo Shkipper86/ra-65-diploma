@@ -1,7 +1,7 @@
 import { asyncThunkCreator, buildCreateSlice } from "@reduxjs/toolkit";
 import { InitialStateTypes } from "./productsTypes";
 
-const initialState: InitialStateTypes = {
+const initialState: InitialStateTypes = {  
   fetchStatus: false,
   prodictPropertiesFetchStatus: false,
   topProductList: [],
@@ -33,13 +33,14 @@ const topSalesSlice = sliceWithThunk({
       },
       {
         pending: (state) => {
+          state.fetchTopError = false
           state.fetchStatus = true;
         },
         fulfilled: (state, action) => {
           state.topProductList = action.payload;
         },
-        rejected: () => {
-          console.log("loading error!");
+        rejected: (state) => {
+          state.fetchTopError = true
         },
         settled: (state) => {
           state.fetchStatus = false;

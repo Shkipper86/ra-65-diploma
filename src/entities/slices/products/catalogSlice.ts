@@ -77,6 +77,7 @@ const catalogSlice = sliceWithThunk({
       },
       {
         pending: (state) => {
+          state.fetchCatalogError = false;
           state.fetchStatus = true;
         },
         fulfilled: (state, action) => {
@@ -87,8 +88,8 @@ const catalogSlice = sliceWithThunk({
             ? (state.offsetMorestatus = false)
             : (state.offsetMorestatus = true);
         },
-        rejected: () => {
-          console.log("loading error!");
+        rejected: (state) => {
+          state.fetchCatalogError = true;
         },
         settled: (state) => {
           state.fetchStatus = false;

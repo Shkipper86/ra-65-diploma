@@ -14,6 +14,7 @@ import {
 } from "../../../entities/slices/products/productsTypes";
 import { CatalogItem } from "../../../shared/ui/layout/catalogItem";
 import { Preloader } from "../../../shared/ui/layout/preloader";
+import { Error } from "../../../shared/ui/layout/error";
 
 export const Catalog = () => {
   const dispatch = useAppDispatch();
@@ -31,13 +32,15 @@ export const Catalog = () => {
   const searchString: string = useAppSelector(
     (state) => state.header.search.searchString
   );
+  const fetchErrorStatus = useAppSelector(state => state.catalog.fetchCatalogError)
+
+  const qParams: IQueryParams = {
+    offset: offset,
+    category: 11,
+    searchString: searchString,
+  };
 
   useEffect(() => {
-    const qParams: IQueryParams = {
-      offset: offset,
-      category: 11,
-      searchString: searchString,
-    };
     dispatch(getCatalog(qParams));
   }, []);
 
@@ -62,24 +65,29 @@ export const Catalog = () => {
 
   return (
     <>
-      <Categories />
-      {catalogFetchStatus ? <Preloader />
-        :
-        <>
-          {catalog === undefined || catalog.length === 0 && <h2 className="text-center nullMsg">Товары не найдены!</h2>}
-          <div className="row">{catalogList}</div>
-          <div className="text-center">
-            {offasetMoreStatus && (
-              <button
-                className="btn btn-outline-primary"
-                onClick={loadNext}
-                disabled={catalogFetchStatus}
-              >
-                Загрузить ещё
-              </button>
-            )}
-          </div>
-        </>
+      {
+        fetchErrorStatus ? <><Error request={getCatalog(qParams)} /> </>
+          : <>
+            <Categories />
+            {catalogFetchStatus ? <Preloader />
+              :
+              <>
+                {catalog === undefined || catalog.length === 0 && <h2 className="text-center nullMsg">Товары не найдены!</h2>}
+                <div className="row">{catalogList}</div>
+                <div className="text-center">
+                  {offasetMoreStatus && (
+                    <button
+                      className="btn btn-outline-primary"
+                      onClick={loadNext}
+                      disabled={catalogFetchStatus}
+                    >
+                      Загрузить ещё
+                    </button>
+                  )}
+                </div>
+              </>
+            }
+          </>
       }
     </>
   );

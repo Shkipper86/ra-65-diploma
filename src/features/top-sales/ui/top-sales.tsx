@@ -7,6 +7,7 @@ import { getTopSalesList } from "../../../entities/slices/products/topSalesSlice
 import { IProductsBaseTypes } from "../../../entities/slices/products/productsTypes";
 import { Preloader } from "../../../shared/ui/layout/preloader";
 import { CatalogItem } from "../../../shared/ui/layout/catalogItem";
+import { Error } from "../../../shared/ui/layout/error";
 
 export const TopSales = () => {
   const topProductState: IProductsBaseTypes[] | undefined = useAppSelector(
@@ -15,6 +16,7 @@ export const TopSales = () => {
   const topProductsFetchStatus: boolean = useAppSelector(
     (state) => state.topSales.fetchStatus
   );
+  const fetchErrorStatus = useAppSelector(state => state.topSales.fetchTopError)
   const dispatch = useAppDispatch();
 
   const productList = topProductState?.map((product) => {
@@ -33,8 +35,15 @@ export const TopSales = () => {
 
   return (
     <>
-      {topProductsFetchStatus && <Preloader />}
-      <div className="row">{productList}</div>
+      {
+        fetchErrorStatus ? <><Error request={getTopSalesList()} />
+        </>
+          :
+          <>
+            {topProductsFetchStatus && <Preloader />}
+            <div className="row">{productList}</div>
+          </>
+      }
     </>
   );
 };

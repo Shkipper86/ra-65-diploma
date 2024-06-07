@@ -7,10 +7,13 @@ import {
 import { Banner } from "../shared/ui/layout/banner";
 import { Link } from "react-router-dom";
 import { Order } from "../features/cart/ui/order";
+import { Preloader } from "../shared/ui/layout/preloader";
 
 export const Cart = () => {
   const dispatch = useAppDispatch();
   const CartItems = useAppSelector((state) => state.cart.cart);
+  const cartFetchStatus = useAppSelector((state) => state.cart.fetchStatus);
+  const orderSendStatus = useAppSelector(state => state.cart.orderSendStatus)
 
   useEffect(() => {
     dispatch(getCartItems());
@@ -75,54 +78,13 @@ export const Cart = () => {
               </tbody>
             </table>
           </section>
-          <Order />
-          {/* <section className="order">
-            <h2 className="text-center">Оформить заказ</h2>
-            <div
-              className="card"
-              style={{ maxWidth: "30rem", margin: "0 auto" }}
-            >
-              <form className="card-body" onSubmit={checkOrder}>
-                <div className="form-group">
-                  <label htmlFor="phone">Телефон</label>
-                  <input
-                    ref={telRef}
-                    type="tel"
-                    className="form-control"
-                    id="phone"
-                    placeholder="Ваш телефон"
-                  />
-                </div>
-                <div className="form-group">
-                  <label htmlFor="address">Адрес доставки</label>
-                  <input
-                    ref={orederRef}
-                    className="form-control"
-                    id="address"
-                    placeholder="Адрес доставки"
-                  />
-                </div>
-                <div className="form-group form-check">
-                  <input
-                    ref={checkRef}
-                    type="checkbox"
-                    className="form-check-input"
-                    id="agreement"
-                  />
-                  <label className="form-check-label" htmlFor="agreement">
-                    Согласен с правилами доставки
-                  </label>
-                </div>
-                <button
-                  type="submit"
-                  className="btn btn-outline-secondary"
-                  disabled={checkRef.current?.checked}
-                >
-                  Оформить
-                </button>
-              </form>
-            </div>
-          </section> */}
+          {cartFetchStatus ? <Preloader />
+            : orderSendStatus ?
+              <div className="successful">
+                <h2>Благодарим за заказ!</h2>
+              </div>
+              : <Order />
+          }
         </div>
       </div>
     </main>
