@@ -29,11 +29,54 @@ const cartSlice = sliceWithThunk({
           title: item.title,
           size: item.size,
           quantity: item.quantity,
+          priceTitle: `${item.price} руб.`,
           price: item.price,
           totalPrice: Number(item.price * Number(item.quantity)),
         };
       });
+      state.checkPriceStatus = true
     }),
+    getPrice: create.asyncThunk(
+      async (id: Number, { rejectWithValue }) => {
+        try {
+          const response = await fetch(
+            `${import.meta.env.VITE_API_URL}/items/${id}`
+          );
+
+          if (!response.ok) {
+            return rejectWithValue("Loading error!");
+          }
+
+          return await response.json();
+        } catch (e) {
+          return rejectWithValue(e);
+        }
+      },
+      {
+        pending: (state) => {
+          state.fetchStatus = true;
+        },
+        fulfilled: (state, action) => {
+          const item = state.cart!.findIndex(cart => cart.id === action.meta.arg)
+          state.cart![item].price != action.payload.price &&
+            (
+              state.cart![item] = {
+                ...state.cart![item],
+                price: action.payload.price,
+                priceTitle: `${state.cart![item].priceTitle} -> ${action.payload.price} руб.`,
+                totalPrice: Number(action.payload.price * state.cart![item].quantity)
+              },
+              state.equalityPrice = true
+            )
+        },
+        rejected: (state) => {
+          state.fetchCartError = true;
+        },
+        settled: (state) => {
+          state.fetchStatus = false;
+        },
+      }
+    ),
     deleteCartItems: create.reducer((state, action: PayloadAction<number>) => {
       localStorage.removeItem(`${action.payload}`);
       state.cart = state.cart?.filter((cart) => cart.id != action.payload);
@@ -82,9 +125,12 @@ const cartSlice = sliceWithThunk({
         }
       }
     ),
+    removeOrderStatus: create.reducer((state) => {
+      state.orderSendStatus = false
+    })
   }),
 });
 
-export const { getCartItems, getCartKeys, deleteCartItems, postOrder } =
+export const { getCartItems, getCartKeys, deleteCartItems, postOrder, getPrice, removeOrderStatus } =
   cartSlice.actions;
 export default cartSlice.reducer;
