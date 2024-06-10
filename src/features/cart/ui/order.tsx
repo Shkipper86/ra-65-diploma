@@ -4,7 +4,6 @@ import {
   useAppSelector,
 } from "../../../entities/hooks/storeHooks";
 import { postOrder } from "../../../entities/slices/products/cartSlice";
-import { Error } from "../../../shared/ui/layout/error";
 
 export const Order = () => {
   const [agreement, setAgreement] = useState(false);
@@ -45,12 +44,14 @@ export const Order = () => {
   };
 
   useEffect(() => {
-    const cookies = document.cookie
-      .split(';')
-      .map(item => { return { [item.split('=')[0].trim()]: item.split('=')[1].trim() } })
-      .reduce((acc, item) => { return { ...acc, ...item } }, {})
-    cookies.adress != undefined && (adressRef.current!.value = `${cookies.adress}`)
-    cookies.phoneNumber != undefined && (telRef.current!.value = `${cookies.phoneNumber}`)
+    if (document.cookie != '') {
+      const cookies = document.cookie
+        .split(';')
+        .map(item => { return { [item.split('=')[0].trim()]: item.split('=')[1].trim() } })
+        .reduce((acc, item) => { return { ...acc, ...item } }, {})
+      cookies.adress != undefined && (adressRef.current!.value = `${cookies.adress}`)
+      cookies.phoneNumber != undefined && (telRef.current!.value = `${cookies.phoneNumber}`)
+    }
   }, [])
 
   const agreementCheck = () => {
@@ -64,11 +65,11 @@ export const Order = () => {
           <span>Попробуйте повторить еще раз</span>
         </div>
       }
-      {/* {orderSendStatus &&
+      {orderSendStatus &&
         <div className="successful">
           <h2>Благодарим за заказ!</h2>
         </div>
-      } */}
+      }
       <section className="order">
         <h2 className="text-center">Оформить заказ</h2>
         <div className="card" style={{ maxWidth: "30rem", margin: "0 auto" }}>

@@ -54,6 +54,7 @@ export type CartItemTypes = {
   title: string;
   size: string;
   quantity: number;
+  priceTitle: string;
   price: number;
   totalPrice: number;
 };
@@ -64,4 +65,6 @@ export type CartTypes = {
   cartKeys: string[];
   cart?: CartItemTypes[];
   orderSendStatus?: boolean;
+  checkPriceStatus?: boolean;
+  equalityPrice?: boolean
 };

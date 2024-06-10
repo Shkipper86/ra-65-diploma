@@ -3,6 +3,8 @@ import { useAppDispatch, useAppSelector } from "../entities/hooks/storeHooks";
 import {
   deleteCartItems,
   getCartItems,
+  getPrice,
+  removeOrderStatus,
 } from "../entities/slices/products/cartSlice";
 import { Banner } from "../shared/ui/layout/banner";
 import { Link } from "react-router-dom";
@@ -14,11 +16,21 @@ export const Cart = () => {
   const CartItems = useAppSelector((state) => state.cart.cart);
   const cartFetchStatus = useAppSelector((state) => state.cart.fetchStatus);
   const orderSendStatus = useAppSelector(state => state.cart.orderSendStatus)
+  const checkPriceStatus = useAppSelector(state => state.cart.checkPriceStatus)
+  const equalityPrice = useAppSelector(state => state.cart.equalityPrice)
 
   useEffect(() => {
-    dispatch(getCartItems());
-
+    dispatch(getCartItems())
+    return (() => {
+      dispatch(removeOrderStatus())
+    })
   }, []);
+
+  useEffect(() => {
+    CartItems?.forEach(cart => {
+      dispatch(getPrice(Number(cart.id)))
+    })
+  }, [checkPriceStatus == true])
 
   const tBody = CartItems?.map((cart, index) => {
     return (
@@ -29,8 +41,8 @@ export const Cart = () => {
         </td>
         <td>{cart.size}</td>
         <td>{cart.quantity}</td>
-        <td>{cart.price}</td>
-        <td>{cart.totalPrice}</td>
+        <td>{cart.priceTitle}</td>
+        <td>{cart.totalPrice} руб.</td>
         <td>
           <button
             className="btn btn-outline-danger btn-sm"
@@ -55,6 +67,7 @@ export const Cart = () => {
           <Banner />
           <section className="cart">
             <h2 className="text-center">Корзина</h2>
+            {equalityPrice == true && <h5 className="price-alert">Внимание, на некоторые товары изменилась цена!</h5>}
             <table className="table table-bordered">
               <thead>
                 <tr>
@@ -73,7 +86,7 @@ export const Cart = () => {
                   <td colSpan={5} className="text-right">
                     Общая стоимость
                   </td>
-                  <td>{totalCost}</td>
+                  <td>{totalCost} руб.</td>
                 </tr>
               </tbody>
             </table>
